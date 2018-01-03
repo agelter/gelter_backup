@@ -10,7 +10,8 @@ Use config.env.template as a starting point for creating config files.
 Each *.env file found in the root directory will be used to create a systemd job
 that will run the backup as specified.
 
-## Installation script
+## Restic Installation script
 
 Whenever you make edits to any of the files in this repository, run
-'sudo install.sh' to copy files to the needed locations and to reload systemd.
+'sudo restic_install.sh' to copy files to the needed locations and to reload
+systemd.
