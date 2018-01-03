@@ -13,8 +13,8 @@ set -x
 
 BACKUP_DIR="/minio"
 CONFIG_DIR="/etc/minio"
-SERVER_IP="localhost"
-SERVER_PORT=9000
+#SERVER_IP="localhost"
+#SERVER_PORT=9000
 
 
 if [[ $EUID -ne 0 ]]; then
@@ -48,7 +48,8 @@ chown minio-user:minio-user ${CONFIG_DIR}
 
 # Create environment file
 echo "MINIO_VOLUMES=\"${BACKUP_DIR}\"" > /etc/default/minio
-echo "MINIO_OPTS=\"-C ${CONFIG_DIR} --address ${SERVER_IP}:${SERVER_PORT}\"" >> /etc/default/minio
+#echo "MINIO_OPTS=\"-C ${CONFIG_DIR} --address ${SERVER_IP}:${SERVER_PORT}\"" >> /etc/default/minio
+echo "MINIO_OPTS=\"-C ${CONFIG_DIR}\"" >> /etc/default/minio
 
 # Copy SystemD script
 cp ./minio.service /etc/systemd/systemd
