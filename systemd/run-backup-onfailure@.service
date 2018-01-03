@@ -1,0 +1,7 @@
+[Unit]
+Description=on failure of backup of %i
+
+[Service]
+User=agelter
+Type=oneshot
+ExecStart=/root/bin/call_restic %i.env unlock

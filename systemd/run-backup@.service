@@ -1,0 +1,8 @@
+[Unit]
+Description=backup of %i
+OnFailure=run-backup-onfailure@%i.service
+
+[Service]
+User=agelter
+Type=oneshot
+ExecStart=/root/bin/call_restic %i.env backup

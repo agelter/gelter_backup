@@ -1,0 +1,10 @@
+[Unit]
+Description=timer for daily backup of %i
+
+[Timer]
+OnCalendar=hourly
+Persistent=true
+Unit=run-backup@%i.service
+
+[Install]
+WantedBy=default.target
