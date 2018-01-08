@@ -4,7 +4,7 @@
 
 Use config.env.template as a starting point for creating config files.
 
-1. Copy it to a file called <backup-name>.env
+1. Copy it to a file called \<backup-name\>.env
 2. Edit it to supply the needed values.
 
 Each *.env file found in the root directory will be used to create a systemd job
