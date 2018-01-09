@@ -27,6 +27,10 @@ wget https://dl.minio.io/server/minio/release/linux-amd64/minio
 chmod +x minio
 mv minio /usr/local/bin
 
+wget https://dl.minio.io/client/mc/release/linux-amd64/mc
+chmod +x mc
+mv mc /usr/local/bin
+
 # create user if needed
 if ! id minio-user > /dev/null 2>&1; then
     useradd -r minio-user -s /sbin/nologin
