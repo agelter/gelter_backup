@@ -26,6 +26,13 @@ cp ./call_restic /root/bin
 # copy over systemd files
 cp ./systemd/* /etc/systemd/system/
 
+# remove old timers
+oldtimers=$(systemctl --no-legend list-timers hourly-backup* | \
+    awk 'start=index($0,"hourly") { print substr($0, start, index($0,"timer") - start + length("timer")) }')
+for timer in $oldtimers; do
+    systemctl stop "${timer}"
+    systemctl disable "${timer}"
+done
 
 for config_file in *.env; do
     # copy all env files
