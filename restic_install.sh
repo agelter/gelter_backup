@@ -23,17 +23,32 @@ fi
 # copy base script over first
 cp ./call_restic /root/bin
 
+<<<<<<< HEAD
 # copy over systemd files
 sed -i "s/_USER_/$(logname)/" ./systemd/*.service
 cp ./systemd/* /etc/systemd/system/
 
 # remove old timers
+=======
+# remove old timers and service counterparts
+>>>>>>> remove_running_jobs
 oldtimers=$(systemctl --no-legend list-timers hourly-backup* | \
     awk 'start=index($0,"hourly") { print substr($0, start, index($0,"timer") - start + length("timer")) }')
 for timer in $oldtimers; do
     systemctl stop "${timer}"
     systemctl disable "${timer}"
 done
+
+# remove the associated services as well
+running_jobs=$(systemctl --no-legend list-units run-backup* | \
+    awk 'start=index($0,"run") { print substr($0, start, index($0,"service") - start + length("service")) }')
+for job in $running_jobs; do
+    systemctl stop "${job}"
+done
+
+# copy over systemd files
+cp ./systemd/* /etc/systemd/system/
+
 
 for config_file in *.env; do
     # copy all env files
