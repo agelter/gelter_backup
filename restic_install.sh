@@ -24,6 +24,7 @@ fi
 cp ./call_restic /root/bin
 
 # copy over systemd files
+sed -i "s/_USER_/$(logname)/" ./systemd/*.service
 cp ./systemd/* /etc/systemd/system/
 
 # remove old timers
