@@ -23,15 +23,7 @@ fi
 # copy base script over first
 cp ./call_restic /root/bin
 
-<<<<<<< HEAD
-# copy over systemd files
-sed -i "s/_USER_/$(logname)/" ./systemd/*.service
-cp ./systemd/* /etc/systemd/system/
-
 # remove old timers
-=======
-# remove old timers and service counterparts
->>>>>>> remove_running_jobs
 oldtimers=$(systemctl --no-legend list-timers hourly-backup* | \
     awk 'start=index($0,"hourly") { print substr($0, start, index($0,"timer") - start + length("timer")) }')
 for timer in $oldtimers; do
@@ -47,6 +39,7 @@ for job in $running_jobs; do
 done
 
 # copy over systemd files
+sed -i "s/_USER_/$(logname)/" ./systemd/*.service
 cp ./systemd/* /etc/systemd/system/
 
 
