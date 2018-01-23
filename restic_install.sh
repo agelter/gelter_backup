@@ -39,9 +39,9 @@ for job in $running_jobs; do
 done
 
 # copy over systemd files
-sed -i "s/_USER_/$(logname)/" ./systemd/*.service
-cp ./systemd/* /etc/systemd/system/
-
+for file in ./systemd/*; do
+    sed "s/_USER_/$(logname)/" "$file" > /etc/systemd/system/"${file##*/}"
+done
 
 for config_file in *.env; do
     # copy all env files
