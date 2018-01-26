@@ -12,7 +12,11 @@ echo "Sourcing ${ENV_FILES_PATH}/${1}"
 source $ENV_FILES_PATH/$1
 
 if [[ $2 =~ [Bb]ackup ]]; then
-	restic --limit-upload "$MAX_UPLOAD_RATE" backup -x "$PATH_TO_BACKUP"
+	if [[ $MAX_UPLOAD_RATE -eq 0 ]]; then
+		restic backup -x "$PATH_TO_BACKUP"
+	else
+		restic --limit-upload "$MAX_UPLOAD_RATE" backup -x "$PATH_TO_BACKUP"
+	fi
 fi
 
 if [[ $2 =~ [Cc]lean ]]; then
