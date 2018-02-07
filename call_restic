@@ -20,7 +20,12 @@ if [[ $2 =~ [Bb]ackup ]]; then
 fi
 
 if [[ $2 =~ [Cc]lean ]]; then
-	restic forget --prune -l "$SNAPSHOTS_TO_REMEMBER"
+	restic forget --prune \
+	${RESTIC_KEEP_HOURLY:+--keep-hourly ${RESTIC_KEEP_HOURLY}} \
+	${RESTIC_KEEP_DAILY:+--keep-daily ${RESTIC_KEEP_DAILY}} \
+	${RESTIC_KEEP_WEEKLY:+--keep-weekly ${RESTIC_KEEP_WEEKLY}} \
+	${RESTIC_KEEP_MONTHLY:+--keep-monthly ${RESTIC_KEEP_MONTHLY}} \
+	${RESTIC_KEEP_YEARLY:+--keep-yearly ${RESTIC_KEEP_YEARLY}}
 fi
 
 if [[ $2 =~ [Uu]nlock ]]; then
