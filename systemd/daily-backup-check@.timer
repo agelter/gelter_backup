@@ -1,0 +1,10 @@
+[Unit]
+Description=timer for daily consistency check of %i backup
+
+[Timer]
+OnCalendar=daily
+Persistent=true
+Unit=run-backup-check@%i.service
+
+[Install]
+WantedBy=default.target

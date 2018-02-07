@@ -28,6 +28,10 @@ if [[ $2 =~ [Cc]lean ]]; then
 	${RESTIC_KEEP_YEARLY:+--keep-yearly ${RESTIC_KEEP_YEARLY}}
 fi
 
+if [[ $2 =~ [Cc]heck ]]; then
+	restic check
+fi
+
 if [[ $2 =~ [Uu]nlock ]]; then
 	restic unlock
 fi

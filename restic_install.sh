@@ -24,16 +24,14 @@ fi
 cp ./call_restic /root/bin
 
 # remove old timers
-oldtimers=$(systemctl --no-legend list-timers hourly-backup* | \
-    awk 'start=index($0,"hourly") { print substr($0, start, index($0,"timer") - start + length("timer")) }')
+oldtimers=$(systemctl --no-legend list-timers -- *-backup* | sed -e 's/.*\(\(hourly\|daily\).*timer\).*/\1/')
 for timer in $oldtimers; do
     systemctl stop "${timer}"
     systemctl disable "${timer}"
 done
 
 # remove the associated services as well
-running_jobs=$(systemctl --no-legend list-units run-backup* | \
-    awk 'start=index($0,"run") { print substr($0, start, index($0,"service") - start + length("service")) }')
+running_jobs=$(systemctl --no-legend list-units run-backup* | sed -e 's/.*\(run.*service\).*/\1/')
 for job in $running_jobs; do
     systemctl stop "${job}"
 done
@@ -47,12 +45,13 @@ for config_file in *.env; do
     # copy all env files
     cp "${config_file}" /root/bin
 
-    tmp=${config_file%.env}
-    service_name=${tmp##*/}
-    systemctl start hourly-backup@"${service_name}".timer
-    systemctl enable hourly-backup@"${service_name}".timer
-    systemctl start hourly-backup-clean@"${service_name}".timer
-    systemctl enable hourly-backup-clean@"${service_name}".timer
+    service_name=$(basename "${config_file}" .env)
+
+    for timer_name in ./systemd/*.timer; do
+        timer_prefix=$(basename "${timer_name}" @.timer)
+        systemctl start "${timer_prefix}"@"${service_name}".timer
+        systemctl enable "${timer_prefix}"@"${service_name}".timer
+    done
 done
 
 # reload systemd
