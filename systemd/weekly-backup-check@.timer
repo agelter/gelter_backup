@@ -1,8 +1,8 @@
 [Unit]
-Description=timer for daily consistency check of %i backup
+Description=timer for weekly consistency check of %i backup
 
 [Timer]
-OnCalendar=daily
+OnCalendar=weekly
 Persistent=true
 Unit=run-backup-check@%i.service
 

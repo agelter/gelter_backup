@@ -24,7 +24,7 @@ fi
 cp ./call_restic /root/bin
 
 # remove old timers
-oldtimers=$(systemctl --no-legend list-timers -- *-backup* | sed -e 's/.*\(\(hourly\|daily\).*timer\).*/\1/')
+oldtimers=$(systemctl --no-legend list-timers -- *-backup* | sed -e 's/.*\(\(hourly\|daily\|weekly\|monthly\).*timer\).*/\1/')
 for timer in $oldtimers; do
     systemctl stop "${timer}"
     systemctl disable "${timer}"
