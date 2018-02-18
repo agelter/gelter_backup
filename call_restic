@@ -13,9 +13,9 @@ source $ENV_FILES_PATH/$1
 
 if [[ $2 =~ [Bb]ackup ]]; then
 	if [[ $MAX_UPLOAD_RATE -eq 0 ]]; then
-		restic backup -x "$PATH_TO_BACKUP"
+		restic backup --exclude-caches -x "$PATH_TO_BACKUP"
 	else
-		restic --limit-upload "$MAX_UPLOAD_RATE" backup -x "$PATH_TO_BACKUP"
+		restic --limit-upload "$MAX_UPLOAD_RATE" backup --exclude-caches -x "$PATH_TO_BACKUP"
 	fi
 fi
 
