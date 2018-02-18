@@ -20,7 +20,7 @@ if [[ $2 =~ [Bb]ackup ]]; then
 fi
 
 if [[ $2 =~ [Cc]lean ]]; then
-	restic forget --prune \
+	restic forget \
 	${RESTIC_KEEP_HOURLY:+--keep-hourly ${RESTIC_KEEP_HOURLY}} \
 	${RESTIC_KEEP_DAILY:+--keep-daily ${RESTIC_KEEP_DAILY}} \
 	${RESTIC_KEEP_WEEKLY:+--keep-weekly ${RESTIC_KEEP_WEEKLY}} \
