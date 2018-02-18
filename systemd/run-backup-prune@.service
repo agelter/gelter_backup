@@ -1,0 +1,8 @@
+[Unit]
+Description=backup prune of %i
+OnFailure=run-backup-onfailure@%i.service
+After=run-clean@%i.service
+
+[Service]
+User=_USER_
+ExecStart=/root/bin/call_restic %i.env prune

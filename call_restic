@@ -28,6 +28,10 @@ if [[ $2 =~ [Cc]lean ]]; then
 	${RESTIC_KEEP_YEARLY:+--keep-yearly ${RESTIC_KEEP_YEARLY}}
 fi
 
+if [[ $2 =~ [Pp]rune ]]; then
+	restic prune
+fi
+
 if [[ $2 =~ [Cc]heck ]]; then
 	restic check
 fi
