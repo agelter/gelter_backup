@@ -45,6 +45,9 @@ for config_file in *.env; do
     # copy all env files
     cp "${config_file}" /root/bin
 
+    # Unlock restic in case it was in the middle of something
+    /root/bin/call_restic "${config_file}" unlock
+
     service_name=$(basename "${config_file}" .env)
 
     for timer_name in ./systemd/*.timer; do
