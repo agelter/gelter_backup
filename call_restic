@@ -28,12 +28,24 @@ if [[ $2 =~ [Cc]lean ]]; then
 	${RESTIC_KEEP_YEARLY:+--keep-yearly ${RESTIC_KEEP_YEARLY}}
 fi
 
+if [[ $2 =~ [Cc]heck ]]; then
+	restic check
+fi
+
 if [[ $2 =~ [Pp]rune ]]; then
 	restic prune
 fi
 
-if [[ $2 =~ [Cc]heck ]]; then
-	restic check
+if [[ $2 =~ [Rr]ebuild-index ]]; then
+	restic rebuild-index
+fi
+
+if [[ $2 =~ [Ss]napshots ]]; then
+	restic snapshots
+fi
+
+if [[ $2 =~ [Ss]tats ]]; then
+	restic stats
 fi
 
 if [[ $2 =~ [Uu]nlock ]]; then
