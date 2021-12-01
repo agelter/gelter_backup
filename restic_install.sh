@@ -26,19 +26,19 @@ cp ./call_restic /root/bin
 # remove old timers
 oldtimers=$(systemctl --no-legend list-timers -- *-backup* | sed -e 's/.*\(\(hourly\|daily\|weekly\|monthly\).*timer\).*/\1/')
 for timer in $oldtimers; do
-    systemctl stop "${timer}"
+    systemctl stop "${timer}" || true
     systemctl disable "${timer}"
 done
 
 # remove the associated services as well
 running_jobs=$(systemctl --no-legend list-units run-backup* | sed -e 's/.*\(run.*service\).*/\1/')
 for job in $running_jobs; do
-    systemctl stop "${job}"
+    systemctl stop "${job}" || true
 done
 
 # copy over systemd files
 for file in ./systemd/*; do
-    sed "s/_USER_/$(logname)/" "$file" > /etc/systemd/system/"${file##*/}"
+    sed "s/_USER_/$(whoami)/" "$file" > "/etc/systemd/system/${file##*/}"
 done
 
 for config_file in *.env; do
